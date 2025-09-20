@@ -40,11 +40,11 @@ mes = st.selectbox("Mes:",
 años = sorted(df_gasolina['Año'].unique())
 año = st.selectbox("Año:", list(range(min(años), max(años)+5)), index=len(años)-1)
 
-# --- Predicción ---
+# Crear 3 columnas
 col1, col2, col3 = st.columns([1,3,1])
 
-with col2:  # Botón centrado
-    if st.button("🔮 Predecir"):
+with col3:  # El botón queda centrado
+    if st.button("🙌 Predecir"):
         try:
             modelo = modelo_data['modelo']
             encoder_entidad = modelo_data['encoder_entidad']
@@ -56,25 +56,8 @@ with col2:  # Botón centrado
             X_pred = np.array([[entidad_encoded, mes_encoded, año]])
             precio_predicho = modelo.predict(X_pred)[0]
 
-            # Bloque con degradado rosa
-            st.markdown(f"""
-            <div style="
-                background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-                padding: 2rem;
-                border-radius: 15px;
-                text-align: center;
-                color: white;
-                font-size: 1.5rem;
-                font-weight: bold;
-                margin-top: 1rem;
-            ">
-                💰 ${precio_predicho:.2f} MXN  
-                <br>
-                <span style="font-size:1rem; font-weight:normal;">
-                    {entidad} • {mes} {año}
-                </span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.success(f"💰 Precio estimado: **${precio_predicho:.2f} MXN**")
+            st.write(f"({entidad}, {mes} {año})")
 
         except Exception as e:
             st.error(f"Error en la predicción: {str(e)}")
