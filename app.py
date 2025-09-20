@@ -42,9 +42,9 @@ año = st.selectbox("Año:", list(range(min(años), max(años)+5)), index=len(a�
 
 # --- Predicción ---
 # Crear 3 columnas
-col1, col2, col3 = st.columns([1,2,1])
+col1, col2, col3 = st.columns([1,3,1])
 
-with col2:  # El botón queda centrado
+with col3:  # El botón queda centrado
     if st.button("🔮 Predecir"):
         try:
             modelo = modelo_data['modelo']
