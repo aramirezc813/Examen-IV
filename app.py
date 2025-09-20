@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-st.title("⛽ Predicción de Precios de Gasolina en México")
+st.title("Predicción de Precios de Gasolina en México ⛽ ")
 
 st.write("""
 Esta aplicación predice el **precio de la gasolina** en México a partir de:
@@ -41,7 +41,7 @@ años = sorted(df_gasolina['Año'].unique())
 año = st.selectbox("Año:", list(range(min(años), max(años)+5)), index=len(años)-1)
 
 # --- Predicción ---
-if st.button("🔮 Predecir"):
+if st.button(" 🙌 Predecir 🙌"):
     try:
         modelo = modelo_data['modelo']
         encoder_entidad = modelo_data['encoder_entidad']
