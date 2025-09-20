@@ -55,7 +55,7 @@ with col3:  # El botón queda centrado
 
             X_pred = np.array([[entidad_encoded, mes_encoded, año]])
             precio_predicho = modelo.predict(X_pred)[0]
-
+        with col1:
             st.success(f"💰 Precio estimado: **${precio_predicho:.2f} MXN**")
             st.write(f"({entidad}, {mes} {año})")
 
