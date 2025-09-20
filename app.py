@@ -40,10 +40,9 @@ mes = st.selectbox("Mes:",
 años = sorted(df_gasolina['Año'].unique())
 año = st.selectbox("Año:", list(range(min(años), max(años)+5)), index=len(años)-1)
 
-# Crear 3 columnas
 col1, col2, col3 = st.columns([1,3,1])
 
-with col3:  # El botón queda centrado
+with col3:  # Botón en la última columna
     if st.button("🙌 Predecir"):
         try:
             modelo = modelo_data['modelo']
@@ -55,10 +54,13 @@ with col3:  # El botón queda centrado
 
             X_pred = np.array([[entidad_encoded, mes_encoded, año]])
             precio_predicho = modelo.predict(X_pred)[0]
-        with col1:
-            st.success(f"💰 Precio estimado: **${precio_predicho:.2f} MXN**")
-            st.write(f"({entidad}, {mes} {año})")
+
+            # Mostrar resultado en col1
+            with col1:
+                st.success(f"💰 Precio estimado: **${precio_predicho:.2f} MXN**")
+                st.write(f"({entidad}, {mes} {año})")
 
         except Exception as e:
             st.error(f"Error en la predicción: {str(e)}")
+
 
