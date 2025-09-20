@@ -12,23 +12,33 @@ Esta aplicación predice el **precio de la gasolina** en México a partir de:
 - Año  
 """)
 
-# --- Cargar modelo entrenado ---
+# --- Cargar datos y modelo ---
 @st.cache_resource
 def cargar_modelo():
     with open("modelo_gasolina.pkl", "rb") as f:
         modelo_data = pickle.load(f)
     return modelo_data
 
+@st.cache_data
+def cargar_datos():
+    return pd.read_csv("Gasolina_expandido.csv")
+
 modelo_data = cargar_modelo()
+df_gasolina = cargar_datos()
 
 # --- Entradas del usuario ---
 st.header("Datos de entrada")
 
-entidad = st.text_input("Entidad Federativa:", "Nacional")
+# Selectbox con entidades desde el dataset
+entidades = sorted(df_gasolina['Entidad'].unique())
+entidad = st.selectbox("Entidad Federativa:", entidades)
+
 mes = st.selectbox("Mes:", 
                    ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
                     'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'])
-año = st.number_input("Año:", min_value=2000, max_value=2050, value=2025, step=1)
+
+años = sorted(df_gasolina['Año'].unique())
+año = st.selectbox("Año:", list(range(min(años), max(años)+5)), index=len(años)-1)
 
 # --- Predicción ---
 if st.button("🔮 Predecir"):
